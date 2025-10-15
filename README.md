@@ -53,7 +53,7 @@ DMDW_Project/
 
 1. **Clone this repository**
    ```bash
-   git clone https://github.com/<your-username>/world-happiness-clustering.git
+   git clone https://github.com/Debdyuti2004/world-happiness-clustering.git
    cd world-happiness-clustering
 
 2. Install dependencies
