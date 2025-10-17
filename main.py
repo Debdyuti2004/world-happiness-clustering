@@ -1,38 +1,68 @@
 # main.py
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.cluster import KMeans
 from src.preprocessing import load_and_clean_data, scale_features
-from src.clustering import find_optimal_clusters, perform_kmeans, perform_hierarchical
+from src.clustering import perform_kmeans, perform_hierarchical
 from src.visualize import plot_clusters, summarize_clusters
 
-# -----------------------------
-# STEP 1: Load and preprocess data
-# -----------------------------
-print("🔹 Step 1: Loading and Preprocessing Dataset...")
-df = load_and_clean_data()
-X_scaled, scaler = scale_features(df)
+def main():
+    # -------------------------------
+    # STEP 1: Load & Clean Data
+    # -------------------------------
+    df = load_and_clean_data()
+    print("\n✅ Head of the dataset:")
+    print(df.head())
 
-# -----------------------------
-# STEP 2: Find optimal number of clusters
-# -----------------------------
-print("\n🔹 Step 2: Finding Optimal Number of Clusters...")
-find_optimal_clusters(X_scaled, max_k=10)
+    # -------------------------------
+    # STEP 2: Scale Features
+    # -------------------------------
+   # STEP 2: Scale Features
+    X_scaled, scaler, numeric_cols = scale_features(df)
+    print(f"Scaled columns: {numeric_cols}")
 
-# -----------------------------
-# STEP 3: Apply K-Means
-# -----------------------------
-k = 4  # You can adjust after checking elbow plot
-print(f"\n🔹 Step 3: Applying K-Means with k={k}...")
-df, kmeans_model = perform_kmeans(X_scaled, df, k=k)
+    # -------------------------------
+    # STEP 3: Elbow Method for Optimal k
+    # -------------------------------
+    max_k = 10  # you can change this
+    wcss = []
+    for i in range(1, max_k + 1):
+        kmeans = KMeans(n_clusters=i, init="k-means++", random_state=42)
+        kmeans.fit(X_scaled)
+        wcss.append(kmeans.inertia_)
 
-# -----------------------------
-# STEP 4: Visualize and Analyze
-# -----------------------------
-print("\n🔹 Step 4: Visualizing Clusters and Summarizing Data...")
-plot_clusters(df)
-summary = summarize_clusters(df)
+    plt.figure(figsize=(8, 4))
+    plt.plot(range(1, max_k + 1), wcss, marker='o')
+    plt.title("Elbow Method - Optimal k")
+    plt.xlabel("Number of Clusters")
+    plt.ylabel("WCSS")
+    plt.show()
 
-# -----------------------------
-# STEP 5 (Optional): Hierarchical Clustering
-# -----------------------------
-print("\n🔹 Step 5: Performing Hierarchical Clustering...")
-perform_hierarchical(X_scaled, df)
+    print("\n🔹 Look at the elbow plot to decide the optimal number of clusters (k).")
+    
+    # -------------------------------
+    # STEP 4: K-Means Clustering
+    # -------------------------------
+    k = int(input("\nEnter number of clusters (k) based on elbow plot: "))
+    df_clustered, kmeans_model = perform_kmeans(X_scaled, df.copy(), k=k)
+    print(f"\n✅ K-Means applied with {k} clusters!")
+    
+    # Cluster Summary
+    summary = summarize_clusters(df_clustered)
+    print("\n📈 Cluster Summary:")
+    print(summary)
 
+    # -------------------------------
+    # STEP 5: Scatter Plot of Clusters
+    # -------------------------------
+    fig1 = plot_clusters(df_clustered)
+    fig1.show()
+
+    # -------------------------------
+    # STEP 6: Hierarchical Clustering
+    # -------------------------------
+    fig2 = perform_hierarchical(X_scaled, df)
+    fig2.show()
+
+if __name__ == "__main__":
+    main()

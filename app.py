@@ -36,9 +36,14 @@ st.dataframe(df.head())
 # ------------------------------------------
 # STEP 2: SCALE FEATURES
 # ------------------------------------------
+# STEP 2: SCALE FEATURES
 st.header("⚙️ Step 2: Scale Numeric Features")
-X_scaled, scaler = scale_features(df)
-st.success("✅ Features scaled successfully!")
+try:
+    X_scaled, scaler, numeric_cols = scale_features(df)
+    st.success(f"✅ Features scaled successfully! Columns used: {', '.join(numeric_cols)}")
+except ValueError as e:
+    st.error(f"Error: {e}")
+
 
 # ------------------------------------------
 # STEP 3: FIND OPTIMAL K (Elbow Method)
