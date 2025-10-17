@@ -1,13 +1,13 @@
 # 🌍 World Happiness Clustering
 
-This project performs **unsupervised machine learning** on the *World Happiness Report* dataset to uncover patterns among countries based on key happiness indicators.  
-It uses both **K-Means** and **Hierarchical Clustering** to group countries with similar socio-economic and well-being characteristics.
+This project performs unsupervised machine learning on the World Happiness Report dataset to uncover patterns among countries based on key happiness indicators.  
+It uses both **K-Means** and **Hierarchical Clustering** to group countries with similar socio-economic and well-being characteristics, and provides both a **Python script** and an **interactive Streamlit dashboard** for exploration.
 
 ---
 
 ## 📊 Overview
+The World Happiness Report ranks countries by their happiness scores using several key features:
 
-The **World Happiness Report** ranks countries by their happiness scores using several key features:
 - GDP per capita  
 - Social support  
 - Healthy life expectancy  
@@ -19,13 +19,13 @@ This project identifies clusters of countries that share similar happiness chara
 ---
 
 ## 🧠 Features
-
-- ✅ Data loading and preprocessing  
-- ✅ Feature scaling using `StandardScaler`  
-- ✅ Optimal cluster selection using **Elbow Method**  
-- ✅ K-Means clustering implementation  
-- ✅ Hierarchical clustering with dendrograms  
-- ✅ Cluster visualization and summary statistics  
+✅ Data loading and preprocessing  
+✅ Feature scaling using StandardScaler  
+✅ Optimal cluster selection using Elbow Method  
+✅ K-Means clustering implementation  
+✅ Hierarchical clustering with dendrograms  
+✅ Cluster visualization and summary statistics  
+✅ **Interactive Streamlit dashboard (`app.py`) for exploration**
 
 ---
 
@@ -40,9 +40,9 @@ DMDW_Project/
 │ ├── preprocessing.py # Data cleaning & feature scaling
 │ ├── clustering.py # KMeans & Hierarchical clustering
 │ ├── visualize.py # Plots and cluster summaries
-│ └── init.py
 │
-├── main.py # Main entry point
+├── app.py # Streamlit dashboard
+├── main.py # Runs clustering & visualizations via console
 ├── requirements.txt # Required libraries
 └── README.md # Project documentation
 
@@ -62,12 +62,20 @@ pip install -r requirements.txt
 
 
 Usage
-
 Run the project from the root directory:
-
 python main.py
 
+Run Streamlit dashboard (app.py):
+streamlit run app.py
+
+
+Upload your own CSV or use the default dataset.
+
+Select number of clusters using sliders.
+
+Visualize K-Means clusters and hierarchical dendrogram interactively.
 OUTPUT:
+
 Cluster Summary:
 
          GDP per capita  Social support  ...  Freedom to make life choices  Perceptions of corruption    
