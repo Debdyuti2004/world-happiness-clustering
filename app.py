@@ -33,9 +33,6 @@ else:
 
 st.dataframe(df.head())
 
-# ------------------------------------------
-# STEP 2: SCALE FEATURES
-# ------------------------------------------
 # STEP 2: SCALE FEATURES
 st.header("⚙️ Step 2: Scale Numeric Features")
 try:
@@ -45,9 +42,7 @@ except ValueError as e:
     st.error(f"Error: {e}")
 
 
-# ------------------------------------------
 # STEP 3: FIND OPTIMAL K (Elbow Method)
-# ------------------------------------------
 st.header("📊 Step 3: Find Optimal Number of Clusters (Elbow Method)")
 
 max_k = st.slider("Select max k for Elbow Method", min_value=3, max_value=15, value=10)
@@ -66,9 +61,7 @@ if st.button("Show Elbow Plot"):
     ax.set_ylabel("WCSS")
     st.pyplot(fig)
 
-# ------------------------------------------
 # STEP 4: RUN K-MEANS CLUSTERING
-# ------------------------------------------
 st.header("🧩 Step 4: Run K-Means Clustering")
 
 k = st.slider("Select number of clusters (k)", min_value=2, max_value=10, value=4)
@@ -102,9 +95,7 @@ if st.button("Run K-Means Clustering"):
     summary = summarize_clusters(df_clustered)
     st.dataframe(summary)
 
-# ------------------------------------------
-# STEP 5: HIERARCHICAL CLUSTERING
-# ------------------------------------------
+# STEP 5: HIERARCHICAL CLUSTERINGS
 st.header("🌲 Step 5: Hierarchical Clustering (Dendrogram)")
 
 if st.button("Show Hierarchical Dendrogram"):
